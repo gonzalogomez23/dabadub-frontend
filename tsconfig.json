@@ -18,10 +18,13 @@
         "name": "next"
       }
     ],
+    "baseUrl": ".", 
     "paths": {
-      "@/*": ["./*"]
+      "@/*": ["./*"],
+      "@app/*": ["app/*"],
+      "@components/*": ["app/components/*"],
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(internal)/posts/[[...slug]]"],
   "exclude": ["node_modules"]
 }
