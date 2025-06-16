@@ -44,6 +44,7 @@ const PostPage = async ({params}: PostPageProps) => {
         </div>
     );
     } catch (error: unknown) {
+        console.error("Error fetching post:", error);
         notFound();
     }
 }
