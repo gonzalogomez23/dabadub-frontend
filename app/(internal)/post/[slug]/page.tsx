@@ -3,13 +3,8 @@ import { notFound } from 'next/navigation';
 import { fetchFromApi } from '@/lib/api';
 import Image from "next/image";
 
-interface PostPageProps {
-    params: {
-        slug: string;
-    };
-}
 
-const PostPage = async ({params}: PostPageProps) => {
+const PostPage = async ({params}: { params: Promise<{ slug: string }> }) => {
 
     const { slug } = await params;
 

@@ -3,13 +3,8 @@ import PostItem from "../PostItem"
 import { fetchFromApi } from '@/lib/api';
 import { type PostCategory, type Post } from "@app/types";
 
-interface PostsPageProps {
-    params: {
-        slug: string;
-    };
-}
 
-const PostsPage = async ({params}: PostsPageProps) => {
+const PostsPage = async ({params}: {params: Promise<{ slug: string }>}) => {
 
     const { slug } = await params;
 
