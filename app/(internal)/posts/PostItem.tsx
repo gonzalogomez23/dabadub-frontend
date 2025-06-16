@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 
 interface PostItemProps {
@@ -29,13 +30,13 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
             <h5 className="text-2xl font-semibold font-headings tracking-tight text-gray-900">
             {post.title}
             </h5>
-            <p className="font-normal text-gray-700">{post.description}</p>
+            <p className="text-gray-700">{post.description}</p>
         </div>
         {post.image && (
-            <img
-            src={post.image}
-            alt={post.title}
-            className="h-40 aspect-[4/3] object-cover rounded-lg"
+            <Image
+              src={post.image}
+              alt={post.title}
+              className="h-40 aspect-[4/3] object-cover rounded-lg"
             />
         )}
     </Link>

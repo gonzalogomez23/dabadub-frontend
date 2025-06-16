@@ -1,6 +1,7 @@
 import { type Post } from "@app/types";
 import { notFound } from 'next/navigation';
 import { fetchFromApi } from '@/lib/api';
+import Image from "next/image";
 
 interface PostPageProps {
     params: {
@@ -10,7 +11,7 @@ interface PostPageProps {
 
 const PostPage = async ({params}: PostPageProps) => {
 
-    const { slug } = params;
+    const { slug } = await params;
 
     try {
     const response = await fetchFromApi<{ data: Post }>(`/posts/${slug}`);
@@ -20,7 +21,11 @@ const PostPage = async ({params}: PostPageProps) => {
         <div className="py-4">
             <div className="relative rounded-xl bg-white border border-primary/15 overflow-hidden max-w-4xl mx-auto">
                 {post.image && (
-                    <img src={post.image} alt={post.title} className="w-full h-64 object-cover" />
+                    <Image
+                        src={post.image}
+                        alt={post.title}
+                        className="w-full h-64 object-cover" 
+                    />
                 )}
                 <div className="w-full mx-auto flex flex-col gap-6 p-12">
                     {post.category &&

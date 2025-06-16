@@ -3,7 +3,7 @@ export default function PublicLayout({ children }: Readonly<{
 }>) {
   return (
     <>
-      <main>{children}</main>
+      <main className="font-sans">{children}</main>
     </>
   );
 }

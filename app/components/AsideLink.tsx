@@ -1,6 +1,5 @@
 import { Url } from 'next/dist/shared/lib/router/router';
 import Link from 'next/link';
-// import { usePathname } from 'next/navigation';
 
 interface AsideLinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   url?: Url;
