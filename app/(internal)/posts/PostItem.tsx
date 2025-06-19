@@ -37,6 +37,8 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
               src={post.image}
               alt={post.title}
               className="h-40 aspect-[4/3] object-cover rounded-lg"
+              width={0}
+              height={0}
             />
         )}
     </Link>

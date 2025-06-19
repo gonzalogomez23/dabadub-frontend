@@ -10,11 +10,11 @@ const PostsPage = async ({params}: {params: Promise<{ slug: string }>}) => {
 
     const [postsRes, categoriesRes] = await Promise.all([
         fetchFromApi<{ data: Post[] }>(`/posts${slug ? `?category_slug=${slug}` : ''}`),
-        fetchFromApi<{ categories: PostCategory[] }>('/categories')
+        fetchFromApi<{ data: PostCategory[] }>('/categories')
     ]);
 
     const posts = postsRes.data;
-    const categories = categoriesRes.categories;
+    const categories = categoriesRes.data;
 
     return (
         <div className="min-h-100 flex gap-3 p-3">
