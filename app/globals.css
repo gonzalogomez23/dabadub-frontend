@@ -5,8 +5,8 @@
   --foreground: #171717;
   --color-primary: rgb(0 87 48);
   --color-secondary: rgb(5 113 48);
-  --color-light1: #d9f1e0;
-  --color-border1: rgba(0, 87, 48, 0.3);
+  --color-light1: #caffcd;
+  --color-border1: rgba(0, 87, 48, 0.2);
 }
 
 @theme inline {
@@ -15,6 +15,7 @@
   --color-primary: var(--color-primary);
   --color-secondary: var(--color-secondary);
   --color-light1: var(--color-light1);
+  --color-border1: var(--color-border1);
   --font-sans: var(--font-inter);
   --font-serif: var(--font-sorts-mill-goudy);
   --font-headings: var(--font-outfit);
