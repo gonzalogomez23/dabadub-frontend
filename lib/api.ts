@@ -8,7 +8,7 @@ export async function fetchFromApi<T>(endpoint: string, options?: RequestInit): 
       ...options?.headers,
     },
     ...options,
-    next: { revalidate: 60 }, //optional
+    next: { revalidate: 60 },
   });
 
   if (!res.ok) {

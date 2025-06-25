@@ -3,7 +3,6 @@
 import PrimaryButton from "@/app/components/PrimaryButton"
 import Link from "next/link"
 import { useState } from "react"
-import { redirect } from "next/navigation"
 import { useRouter } from "next/navigation"
 
 const SignupForm = () => {

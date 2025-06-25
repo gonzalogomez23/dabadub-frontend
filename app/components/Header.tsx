@@ -1,7 +1,9 @@
 import Image from "next/image"
 import Link from "next/link"
+import AuthWrapper from "./auth/AuthWrapper";
 
 const Header = ({className = ''}) => {
+
   return (
     <header className={`w-full flex items-center justify-between bg-white border-b border-t border-primary/15 px-12 py-6 ${className}`}>
         <Link href="/">
@@ -16,6 +18,7 @@ const Header = ({className = ''}) => {
                 />
             </div>
         </Link>
+        <AuthWrapper/>
     </header>
   )
 }
