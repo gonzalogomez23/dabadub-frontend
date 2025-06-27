@@ -1,6 +1,7 @@
 import Image from "next/image"
 import Link from "next/link"
-import AuthWrapper from "./auth/AuthWrapper";
+import AuthArea from "./auth/AuthArea"
+// import AuthWrapper from "./auth/AuthWrapper";
 
 const Header = ({className = ''}) => {
 
@@ -18,7 +19,8 @@ const Header = ({className = ''}) => {
                 />
             </div>
         </Link>
-        <AuthWrapper/>
+        <AuthArea />
+        {/* <AuthWrapper/> */}
     </header>
   )
 }

@@ -10,7 +10,7 @@ export async function fetchFromApi<T>(endpoint: string, options?: RequestInit): 
     ...options,
     next: { revalidate: 60 },
   });
-
+  console.log('API request:', { endpoint, options, status: res.status });
   if (!res.ok) {
     const errorBody = await res.text();
     throw new Error(`API error: ${res.status} - ${errorBody}`);

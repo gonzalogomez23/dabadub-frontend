@@ -1,5 +1,6 @@
+'use client'
 import { useEffect, useRef, useState } from "react"
-import { ReactNode} from 'react';
+import { ReactNode } from 'react';
 
 interface DropdownMenuProps {
     label?: string;

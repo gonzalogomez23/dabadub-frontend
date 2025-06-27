@@ -1,8 +1,12 @@
+'use client'
+import { UserProvider } from '@/context/UserProvider'
 import SignupForm from './SignUpForm'
 
 const SignUpPage = () => {
   return (
-    <SignupForm />
+    <UserProvider>
+      <SignupForm />
+    </UserProvider>
   )
 }
 
