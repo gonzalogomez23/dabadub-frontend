@@ -3,59 +3,38 @@ import PrimaryButton from "@/app/components/PrimaryButton"
 import Link from "next/link"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { flattenErrors } from "@/utils/flattenLaravelErrors";
-// import { signup } from "@lib/auth"
+import { signup } from "@/lib/auth"
 
 const SignupForm = () => {
+    const router = useRouter()
     const [errors, setErrors] = useState<string[] | null>(null);
-  const [loading, setLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: ''
-  })
+    const [loading, setLoading] = useState(false);
+    const [formData, setFormData] = useState({
+      name: '',
+      email: '',
+      password: '',
+      password_confirmation: ''
+    })
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }))
-  }
-
-  const router = useRouter()
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setFormData(prev => ({
+        ...prev,
+        [e.target.name]: e.target.value,
+        }))
+    }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-
+    setLoading(true)
     try {
-      const res = await fetch('/api/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      let data;
-      try {
-        data = await res.json();
-      } catch {
-        throw new Error('Error processing server response');
-      }
-
-      if (!res.ok) {
-        const flatErrors = flattenErrors(data?.errors ?? {});
-        setErrors(flatErrors);
-        throw new Error(data?.message ?? 'An error occurred during signup');
-      }
-      localStorage.setItem('token', data.access_token);
-      router.push('/posts');
+        await signup(formData)
+        router.push('/posts');
     } catch (err: any) {
-      console.error('Signup error:', err);
+        console.error(err);
+        setErrors(err.flatErrors ?? {});
+        console.error(err.message);
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
   }
   
@@ -108,7 +87,7 @@ const SignupForm = () => {
         </ul>
       )}
 
-      <PrimaryButton className="ms-auto" type="submit">
+      <PrimaryButton className={`ms-auto ${loading && 'cursor-default opacity-50'}`} type="submit" disabled={loading}>
           Signup
       </PrimaryButton>
 

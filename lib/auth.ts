@@ -1,5 +1,6 @@
 import { User } from '@/app/types';
-import { fetchFromApi } from './api';
+import { flattenErrors } from "@/utils/flattenLaravelErrors";
+import { fetchFromApi } from "./api";
 
 interface SignupData {
   name: string;
@@ -8,38 +9,48 @@ interface SignupData {
   [key: string]: any;
 }
 
-export const signup = async (formData: SignupData) => {
-  try {
-    const data = await fetchFromApi<{ access_token: string }>('/signup', {
-      method: 'POST',
-      body: JSON.stringify(formData),
-    });
-
-    localStorage.setItem('token', data.access_token);
-    return data;
-  } catch (err: any) {
-    throw { status: err.status || 500, ...err };
-  }
-};
-
 interface LoginData {
   email: string;
   password: string;
 }
 
-export const login = async (formData: LoginData) => {
+export async function signup(formData: SignupData) {
+  return authRequest('signup', formData);
+}
+
+export async function login(formData: LoginData) {
+  return authRequest('login', formData);
+}
+
+async function authRequest<T>(
+  action: string = 'operation',
+  formData: T,
+) {
+  const res = await fetch(`/api/${action}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify(formData),
+  });
+
+  let data;
   try {
-    const data = await fetchFromApi<{ access_token: string }>('/login', {
-      method: 'POST',
-      body: JSON.stringify(formData),
-    });
-    console.log('trying to log in', data)
-    localStorage.setItem('token', data.access_token);
-    return data;
-  } catch (err: any) {
-    throw { status: err.status || 500, ...err };
+    data = await res.json();
+  } catch {
+    throw new Error('Error processing server response');
   }
-};
+
+  if (!res.ok) {
+    const flatErrors = flattenErrors(data?.errors ?? {});
+    const error = new Error(data?.message ?? `An error occurred during ${action}`);
+    (error as any).flatErrors = flatErrors;
+    throw error;
+  }
+
+  localStorage.setItem('token', data.access_token);
+}
 
 export const logout = async () => {
   const token = localStorage.getItem('token');

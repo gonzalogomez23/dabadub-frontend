@@ -1,4 +1,4 @@
-import { fetchCurrentUser } from "@/lib/auth";
+import { fetchCurrentUser } from "@/lib/authold";
 import { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { User } from "@/app/types";
 
