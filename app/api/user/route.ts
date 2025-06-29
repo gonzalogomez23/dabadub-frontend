@@ -3,14 +3,15 @@ import type { NextRequest } from 'next/server';
 
 export async function GET(req: NextRequest) {
   const token = req.cookies.get('access_token')?.value;
-
   if (!token) {
+    console.log('No token found, returning null user');
     return NextResponse.json(
-      { message: 'Unauthorized: No token found' },
-      { status: 401 }
+      { user: null },
+      { status: 200 }
     );
   }
-
+      
+  console.log('Token:', token);
   const API_BASE_URL = process.env.API_BASE_URL;
 
   const backendRes = await fetch(`${API_BASE_URL}/user`, {
@@ -30,5 +31,5 @@ export async function GET(req: NextRequest) {
     );
   }
 
-  return NextResponse.json(data);
+  return NextResponse.json({ user: data });
 }

@@ -55,12 +55,7 @@ export async function logout() {
 
 
 export const fetchCurrentUser = async () => {
-  try {
-    const data = await fetch('/api/user', {
-      credentials: 'include'
-    });
-    return data.ok ? await data.json() : null;
-  } catch {
-    return null;
-  }
+  const res = await fetch('/api/user', { credentials: 'include' });
+  const data = await res.json();
+  return data.user;
 };

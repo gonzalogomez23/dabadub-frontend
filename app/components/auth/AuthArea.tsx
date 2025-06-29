@@ -15,6 +15,7 @@ const  AuthArea = () => {
         const loadUser = async () => {
             try {
                 const currentUser = await fetchCurrentUser();
+                console.log('Current user:', currentUser);
                 setUser(currentUser);
             } catch {
                 setUser(null);
