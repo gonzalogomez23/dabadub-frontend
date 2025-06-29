@@ -63,7 +63,7 @@ interface DropdownMenuItemProps {
   parentMethod?: (ev: React.MouseEvent) => void;
 }
 
-DropdownMenu.Item = ({children, className = '', parentMethod, ...props }: DropdownMenuItemProps) => {
+const DropdownItem = ({children, className = '', parentMethod, ...props }: DropdownMenuItemProps) => {
     return (
         <a href="#" onClick={parentMethod} className={`${className} w-full flex gap-2 items-center hover:bg-gray-200/60 rounded p-2`} {...props}>
             {children}
@@ -71,5 +71,8 @@ DropdownMenu.Item = ({children, className = '', parentMethod, ...props }: Dropdo
     )
         
 }
+
+DropdownItem.displayName = 'DropdownMenuItem';
+DropdownMenu.Item = DropdownItem;
 
 export default DropdownMenu

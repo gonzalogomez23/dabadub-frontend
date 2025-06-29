@@ -27,10 +27,14 @@ const LoginForm = () => {
         try {
             await login(formData)
             router.push('/posts');
-        } catch (err: any) {
+        } catch (err: unknown) {
             console.error(err);
-            setErrors(err.flatErrors ?? {});
-            console.error(err.message);
+            if (err && typeof err === 'object' && 'flatErrors' in err) {
+                setErrors((err as { flatErrors?: string[]; message?: string }).flatErrors ?? []);
+                console.error((err as { message?: string }).message);
+            } else if (err instanceof Error) {
+                console.error(err.message);
+            }
         } finally {
             setLoading(false);
         }
