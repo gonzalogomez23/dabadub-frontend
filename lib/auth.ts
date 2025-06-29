@@ -1,10 +1,10 @@
-import { flattenErrors } from "@/utils/flattenLaravelErrors";
+import { flattenErrors, APIError } from "@/utils/flattenLaravelErrors";
 
 interface SignupData {
   name: string;
   email: string;
   password: string;
-  [key: string]: any;
+  password_confirmation: string;
 }
 
 interface LoginData {
@@ -40,10 +40,9 @@ async function authRequest(
   
   if (!res.ok) {
     const flatErrors = flattenErrors(data?.errors ?? {});
-    const error = new Error(data?.message ?? `An error occurred during ${action}`);
-    (error as any).flatErrors = flatErrors;
-    throw error;
-  }
+    const message = data?.message ?? `An error occurred during ${action}`;
+    throw new APIError(message, flatErrors);
+}
 
   return data;
 }
