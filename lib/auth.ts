@@ -1,6 +1,4 @@
-import { User } from '@/app/types';
 import { flattenErrors } from "@/utils/flattenLaravelErrors";
-import { fetchFromApi } from "./api";
 
 interface SignupData {
   name: string;
@@ -22,16 +20,14 @@ export async function login(formData: LoginData) {
   return authRequest('login', formData);
 }
 
-async function authRequest<T>(
-  action: string = 'operation',
-  formData: T,
-) {
+async function authRequest(
+    action: 'signup' | 'login',
+    formData: SignupData | LoginData
+  ) {
+
   const res = await fetch(`/api/${action}`, {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-    },
+    headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(formData),
   });
 
@@ -41,7 +37,7 @@ async function authRequest<T>(
   } catch {
     throw new Error('Error processing server response');
   }
-
+  
   if (!res.ok) {
     const flatErrors = flattenErrors(data?.errors ?? {});
     const error = new Error(data?.message ?? `An error occurred during ${action}`);
@@ -49,37 +45,22 @@ async function authRequest<T>(
     throw error;
   }
 
-  localStorage.setItem('token', data.access_token);
+  return data;
 }
 
-export const logout = async () => {
-  const token = localStorage.getItem('token');
-  if (!token) return;
+export async function logout() {
+  const res = await fetch('/api/logout', { method: 'POST' });
+  if (!res.ok) throw new Error('Logout failed');
+  return await res.json();
+}
 
+
+export const fetchCurrentUser = async () => {
   try {
-    await fetchFromApi('/logout', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+    const data = await fetch('/api/user', {
+      credentials: 'include'
     });
-  } catch (err) {
-    console.error('Error logging out:', err);
-  }
-
-  localStorage.removeItem('token');
-};
-
-export const fetchCurrentUser = async (): Promise<User | null> => {
-  const token = localStorage.getItem('token');
-  if (!token) return null;
-
-  try {
-    return await fetchFromApi<User>('/user', {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    return data.ok ? await data.json() : null;
   } catch {
     return null;
   }
