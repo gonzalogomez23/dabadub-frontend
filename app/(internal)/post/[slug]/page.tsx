@@ -3,9 +3,8 @@ import { notFound } from 'next/navigation';
 import { fetchFromApi } from '@/lib/api';
 import Image from "next/image";
 
-
-const PostPage = async ({ params }: { params: { slug: string } }) => {
-    const slug = params.slug;
+const PostPage = async ({ params }: {params: Promise<{ slug: string }>}) => {
+    const { slug } = await params;
 
     try {
         const response = await fetchFromApi<{ data: Post }>(`/posts/${slug}`);
