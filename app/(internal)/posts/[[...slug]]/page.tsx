@@ -4,9 +4,9 @@ import { fetchFromApi } from '@/lib/api';
 import { type PostCategory, type Post } from "@app/types";
 
 
-const PostsPage = async ({params}: {params: Promise<{ slug: string }>}) => {
+const PostsPage = async ({ params }: { params: { slug?: string[] } }) => {
 
-    const { slug } = await params;
+    const slug = params.slug?.[0] ?? "";
 
     const [postsRes, categoriesRes] = await Promise.all([
         fetchFromApi<{ data: Post[] }>(`/posts${slug ? `?category_slug=${slug}` : ''}`),
