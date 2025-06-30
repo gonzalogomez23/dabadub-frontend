@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-// import AuthArea from "./auth/AuthArea"
+import AuthArea from "./auth/AuthArea"
 
 const Header = ({className = ''}) => {
 
@@ -18,7 +18,7 @@ const Header = ({className = ''}) => {
                 />
             </div>
         </Link>
-        {/* <AuthArea /> */}
+        <AuthArea />
     </header>
   )
 }
