@@ -11,7 +11,6 @@ export async function GET(req: NextRequest) {
     );
   }
       
-  console.log('Token:', token);
   const API_BASE_URL = process.env.API_BASE_URL;
 
   const backendRes = await fetch(`${API_BASE_URL}/user`, {

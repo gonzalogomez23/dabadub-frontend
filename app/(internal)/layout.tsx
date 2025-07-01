@@ -6,7 +6,9 @@ export default function InternalLayout({ children }: Readonly<{
   return (
     <>
         <Header  className="font-sans"/>
-        <main className="font-sans">{children}</main>
+        <main className="font-sans bg-zinc-100 grow">
+          <div className="w-full max-w-7xl mx-auto">{children}</div>
+        </main>
     </>
   );
 }

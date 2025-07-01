@@ -12,7 +12,7 @@ const PostPage = async ({ params }: {params: Promise<{ slug: string }>}) => {
 
         return (
             <div className="py-4">
-                <div className="relative rounded-xl bg-white border border-primary/15 overflow-hidden max-w-4xl mx-auto">
+                <div className="relative rounded-xl bg-zinc-50 border border-primary/15 overflow-hidden max-w-4xl mx-auto">
                     {post.image && (
                         <Image
                             src={post.image}

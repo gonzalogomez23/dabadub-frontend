@@ -44,7 +44,7 @@ const DropdownMenu = ({ label, buttonIcon, children }: DropdownMenuProps) => {
             {label}
         </button>
         {isOpen && (
-            <div className="absolute right-0 z-10 mt-2 w-44 origin-top-right rounded-lg bg-white border border-border1 shadow-sm focus:outline-none p-2" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
+            <div className="absolute right-0 z-10 mt-2 w-44 origin-top-right rounded-lg bg-zinc-50 border border-border1 shadow-sm focus:outline-none p-2" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabIndex={-1}>
                 <div className="flex flex-col gap-2" role="none">
                     {children}
                 </div>

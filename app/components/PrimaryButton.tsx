@@ -8,7 +8,7 @@ const PrimaryButton = ({ children, variant = 'primary', className = '', ...props
 
   const variantClasses = {
     primary: 'bg-primary hover:bg-secondary text-background',
-    secondary: 'text-primary bg-white border border-border1 hover:bg-gray-100',
+    secondary: 'text-primary bg-zinc-50 border border-border1 hover:bg-gray-100',
     danger: 'text-red-600 bg-red-100 border border-red-300 hover:bg-red-200',
   }
 

@@ -32,9 +32,11 @@ const  AuthArea = () => {
 
     if (loading) {
         return (
-            <div className="flex items-center gap-2 px-2 py-1 animate-pulse">
-                <div className="w-8 h-8 rounded-full bg-gray-200" />
-                <div className="w-24 h-3 rounded bg-gray-200" />
+            <div className="p-2">
+                <div className="flex items-center gap-2 px-2 py-1 animate-pulse">
+                    <div className="w-8 h-8 rounded-full bg-gray-200" />
+                    <div className="w-24 h-3 rounded bg-gray-200" />
+                </div>
             </div>
         )
     }

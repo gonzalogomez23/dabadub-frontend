@@ -52,7 +52,7 @@ const SignupForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-full flex flex-col items-start bg-white/30 border border-border1 shadow-sm rounded-xl gap-4 py-6 px-4 lg:p-8"
+      className="max-w-full flex flex-col items-start bg-zinc-50/30 border border-border1 shadow-sm rounded-xl gap-4 py-6 px-4 lg:p-8"
       noValidate
     >
       <h1 className="title">Create your account</h1>
