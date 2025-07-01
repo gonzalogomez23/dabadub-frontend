@@ -4,17 +4,20 @@ import Link from "next/link"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { signup } from "@/lib/auth"
+import FormInput from "@/app/components/FormImput"
+
+type FormErrors = Record<string, string[]>;
 
 const SignupForm = () => {
     const router = useRouter()
-    const [errors, setErrors] = useState<string[] | null>(null);
-    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
       name: '',
       email: '',
       password: '',
       password_confirmation: ''
     })
+    const [errors, setErrors] = useState<FormErrors | null>(null);
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData(prev => ({
@@ -29,18 +32,22 @@ const SignupForm = () => {
     try {
         await signup(formData)
         router.push('/posts');
-    } catch (err: unknown) {
-        console.error(err);
-        if (err && typeof err === 'object' && 'flatErrors' in err) {
-            setErrors((err as { flatErrors?: string[]; message?: string }).flatErrors ?? []);
-            console.error((err as { message?: string }).message);
-        } else if (err instanceof Error) {
-            console.error(err.message);
-        }
-    } finally {
-        setLoading(false);
+    }catch (err: unknown) {
+    console.error(err);
+
+    if (err && typeof err === 'object' && !Array.isArray(err)) {
+        setErrors(err as FormErrors);
+    } else if (err instanceof Error) {
+        setErrors({ general: [err.message] });
+    } else {
+        setErrors({ general: ['An unexpected error occurred.'] });
+    }
+} finally {
+      setLoading(false);
     }
   }
+
+
   
   return (
     <form
@@ -49,52 +56,44 @@ const SignupForm = () => {
       noValidate
     >
       <h1 className="title">Create your account</h1>
-      <input
-        className="bg-white/40 w-96 max-w-full border border-border1 rounded-lg px-4 py-2 focus:outline-secondary"
+      <FormInput
         type="text"
         name="name"
         placeholder="Full Name"
         value={formData.name}
         onChange={handleChange}
+        error={errors?.name?.[0] ?? null}
       />
-      <input
-        className="bg-white/40 w-96 max-w-full border border-border1 rounded-lg px-4 py-2 focus:outline-secondary"
+      <FormInput
         type="email"
         name="email"
         placeholder="Email Address"
         value={formData.email}
         onChange={handleChange}
+        error={errors?.email?.[0] ?? null}
       />
-      <input
-        className="bg-white/40 w-96 max-w-full border border-border1 rounded-lg px-4 py-2 focus:outline-secondary"
+      <FormInput
         type="password"
         name="password"
         placeholder="Password"
         value={formData.password}
         onChange={handleChange}
+        error={errors?.password?.[0] ?? null}
       />
-      <input
-        className="bg-white/40 w-96 max-w-full border border-border1 rounded-lg px-4 py-2 focus:outline-secondary"
+      <FormInput
         type="password"
         name="password_confirmation"
         placeholder="Confirm Password"
         value={formData.password_confirmation}
         onChange={handleChange}
         />
-      {errors && errors.length > 0 && (
-        <ul className="text-red-700">
-          {
-            errors.map((error, index) => (
-              <li key={index}>{error}</li>
-            ))
-          }
-        </ul>
-      )}
 
       <PrimaryButton className={`ms-auto ${loading && 'cursor-default opacity-50'}`} type="submit" disabled={loading}>
           Signup
       </PrimaryButton>
-
+      {errors?.general && (
+        <p className="text-sm text-red-500">{errors.general[0]}</p>
+      )}
       <p className="w-full text-end">
         Already Registered? <Link href="/login" className="text-primary hover:underline">Sign in</Link>
       </p>

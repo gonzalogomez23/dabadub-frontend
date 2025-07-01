@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import AuthArea from "./auth/AuthArea"
+import AuthArea from "./AuthArea"
 
 const Header = ({className = ''}) => {
 

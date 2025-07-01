@@ -39,10 +39,13 @@ async function authRequest(
   }
   
   if (!res.ok) {
-    const flatErrors = flattenErrors(data?.errors ?? {});
-    const message = data?.message ?? `An error occurred during ${action}`;
-    throw new APIError(message, flatErrors);
-}
+    // const flatErrors = flattenErrors(data?.errors ?? {});
+    // const message = data?.message ?? `An error occurred during ${action}`;
+    // throw new APIError(message, flatErrors);
+    // console.log(data.errors)
+    // throw new Error(data.errors)
+    return Promise.reject(data.errors || { message: 'An error occurred' });
+  }
 
   return data;
 }

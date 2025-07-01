@@ -3,8 +3,8 @@ import { fetchCurrentUser, logout } from "@/lib/auth";
 import { useState, useEffect } from "react";
 import { User } from "@/app/types";
 import Link from "next/link"
-import DropdownMenu from "../DropdownMenu"
-import PrimaryButton from "../PrimaryButton"
+import DropdownMenu from "@components/DropdownMenu"
+import PrimaryButton from "@components/PrimaryButton"
 import { ArrowRightStartOnRectangleIcon, BookmarkIcon, UserCircleIcon } from "@heroicons/react/24/solid"
 
 const  AuthArea = () => {
@@ -15,7 +15,6 @@ const  AuthArea = () => {
         const loadUser = async () => {
             try {
                 const currentUser = await fetchCurrentUser();
-                console.log('Current user:', currentUser);
                 setUser(currentUser);
             } catch {
                 setUser(null);
