@@ -1,6 +1,5 @@
 'use client'
 import PrimaryButton from "@/app/components/PrimaryButton"
-import Link from "next/link"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { signup, login } from "@/lib/auth"
@@ -30,11 +29,11 @@ const AuthForm = ({ isSignup = false }) => {
     e.preventDefault()
     setLoading(true)
     try {
-        isSignup
-          ? await signup(formData)
-          : await login({ email: formData.email, password: formData.password })
-        router.push('/posts');
-    }catch (err: unknown) {
+      await (isSignup
+        ? signup(formData)
+        : login({ email: formData.email, password: formData.password }));
+      router.push('/posts');
+    } catch (err: unknown) {
       console.error(err);
       if (err && typeof err === 'object' && !Array.isArray(err)) {
           setErrors(err as FormErrors);
