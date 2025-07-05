@@ -1,18 +1,24 @@
 import { type Post } from "@app/types";
 import { notFound } from 'next/navigation';
-import { fetchFromApi } from '@/lib/api';
+import { fetchFromApi } from '@/lib/fetchFromApi';
 import Image from "next/image";
+import { fetchCurrentUserFromServer } from "@/lib/authServer";
+import EditDeleteWrapper from "./EditDeleteWrapper";
 
-const PostPage = async ({ params }: {params: Promise<{ slug: string }>}) => {
+const PostPage = async ({ params }: {params: { slug: string }}) => {
     const { slug } = await params;
+    const user = await fetchCurrentUserFromServer();
 
     try {
         const response = await fetchFromApi<{ data: Post }>(`/posts/${slug}`);
         const post = response.data;
 
         return (
-            <div className="py-4">
-                <div className="relative rounded-xl bg-white border border-primary/15 overflow-hidden max-w-4xl mx-auto">
+            <div className="p-4">
+                <div className="relative rounded-xl bg-zinc-50 border border-primary/15 overflow-hidden max-w-4xl mx-auto">
+                    {user &&
+                        <EditDeleteWrapper slug={slug}/>
+                    }
                     {post.image && (
                         <Image
                             src={post.image}

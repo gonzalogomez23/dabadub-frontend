@@ -42,7 +42,7 @@ const LoginForm = () => {
 
   return (
     <form
-        className="relative z-10 max-w-full flex flex-col items-start bg-white/30 border border-border1 shadow-sm rounded-xl gap-4 py-6 px-4 lg:p-8"
+        className="relative z-10 max-w-full flex flex-col items-start bg-zinc-50/30 border border-border1 shadow-sm rounded-xl gap-4 py-6 px-4 lg:p-8"
         onSubmit={handleSubmit}
         noValidate
       >
@@ -53,7 +53,7 @@ const LoginForm = () => {
         value={formData.email}
         onChange={handleChange}
         placeholder="Email"
-        className="bg-white/40 w-96 max-w-full border border-border1 rounded-lg px-4 py-2 focus:outline-secondary"
+        className="bg-zinc-50/40 w-96 max-w-full border border-border1 rounded-lg px-4 py-2 focus:outline-secondary"
       />
       <input
         name="password"
@@ -61,7 +61,7 @@ const LoginForm = () => {
         value={formData.password}
         onChange={handleChange}
         placeholder="Password"
-        className="bg-white/40 w-96 max-w-full border border-border1 rounded-lg px-4 py-2 focus:outline-secondary"
+        className="bg-zinc-50/40 w-96 max-w-full border border-border1 rounded-lg px-4 py-2 focus:outline-secondary"
       />
 
         {errors && errors.length > 0 && (

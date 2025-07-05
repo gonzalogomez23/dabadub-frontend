@@ -5,7 +5,7 @@ import AuthArea from "./AuthArea"
 const Header = ({className = ''}) => {
 
   return (
-    <header className={`w-full flex items-center justify-between bg-white border-b border-t border-primary/15 px-12 py-6 ${className}`}>
+    <header className={`w-full flex items-center justify-between bg-zinc-50 border-b border-t border-primary/15 px-12 py-4 ${className}`}>
         <Link href="/">
             <div>
                 <Image

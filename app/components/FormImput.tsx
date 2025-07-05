@@ -36,7 +36,7 @@ const FormInput = ({
                 required={required}
                 autoComplete={autoComplete}
                 disabled={disabled}
-                className={`bg-white/40 w-96 max-w-full border border-border1 rounded-lg px-4 py-2 focus:outline-secondary ${error ? 'border-red-700' : ''} ${className}`}
+                className={`bg-zinc-50/40 w-96 max-w-full border border-border1 rounded-lg px-4 py-2 focus:outline-secondary ${error ? 'border-red-700' : ''} ${className}`}
             />
             {error && (
                 <p className="text-red-700 mt-2">{error}</p>

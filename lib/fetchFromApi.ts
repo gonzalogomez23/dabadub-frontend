@@ -8,7 +8,8 @@ export async function fetchFromApi<T>(endpoint: string, options?: RequestInit): 
       Accept: 'application/json',
     },
     ...options,
-    next: { revalidate: 60 },
+    // next: { revalidate: 60 },
+    cache: 'no-store' 
   });
   
   if (!res.ok) {
@@ -22,3 +23,4 @@ export async function fetchFromApi<T>(endpoint: string, options?: RequestInit): 
     throw new Error('Invalid JSON response from API');
   }
 }
+
