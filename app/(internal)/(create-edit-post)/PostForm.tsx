@@ -1,26 +1,27 @@
 'use client'
-import { useState, useEffect } from "react";
+import { useState, /* useEffect */ } from "react";
 import { type PostCategory, type Post } from "@app/types";
 import PrimaryButton from "@components/PrimaryButton";
-import { fetchFromApi } from "@/lib/api";
+import { useRouter } from "next/navigation";
 
 interface PostFormProps {
-  isUpdateMode?: boolean;
-  initialData?: Post | null
+    initialData?: Post | null
+    categories?: PostCategory[]
+    isUpdateMode?: boolean;
+    slug?: string;
 }
 
-const PostForm = ({ isUpdateMode = false, initialData }: PostFormProps) => {
-    const [loading, setLoading] = useState(false);
-    const [loadingCategories, setLoadingCategories] = useState(true)
+const PostForm = ({ initialData, categories, isUpdateMode = false, slug }: PostFormProps) => {
+    // const [loading, setLoading] = useState(false);
     // const [errors, setErrors] = useState(null);
+
+    const router = useRouter()
     const [postData, setPostData] = useState({
         title: initialData?.title ?? "",
         description: initialData?.description ?? "",
         content: initialData?.content ?? "",
         category_id: initialData?.category?.id ?? "",
-        published: initialData?.published ?? true,
     });
-    const [categories, setCategories] = useState<PostCategory[]>([])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -38,28 +39,49 @@ const PostForm = ({ isUpdateMode = false, initialData }: PostFormProps) => {
         }));
     }
 
-    useEffect(() => {
-        const fetchCategories = async () => {
-            try {
-                setLoadingCategories(true)
-                const res = await fetchFromApi<{ data: PostCategory[] }>('/categories');
-                setCategories(res.data);
-            } catch (err) {
-                console.error(err);
-                // setErrors('Error loading categories');
-            } finally {
-                setLoadingCategories(false);
-            }
-        };
+    const handleSubmit = async (ev: React.FormEvent<HTMLFormElement>) => {
+        ev.preventDefault();
+        
+        try {
+            const data = new FormData();
+            data.append("title", postData.title);
+            data.append("description", postData.description);
+            data.append("content", postData.content);
+            data.append("category_id", postData.category_id.toString());
+            // if (isUpdateMode) {data.append('_method', 'PUT');}
 
-        fetchCategories();
-    }, [])
+            // console.log('Submitting post data:', Object.fromEntries(data.entries()));
+            const endpoint = isUpdateMode ? `/api/posts/${slug}` : '/api/posts';
+            const method = isUpdateMode ? 'PUT' : 'POST';
+
+            const res = await fetch(endpoint, {
+                method: method,
+                body: data,
+            });
+
+            console.log(res)
+
+            if (!res.ok) {
+                const errorText = await res.text();
+                throw new Error(`Error: ${res.status} - ${errorText}`);
+            }
+
+            // setSuccess(true);
+            router.push('/posts')
+            router.refresh()
+        } catch (err) {
+            console.error(err);
+            // setError("Error creating post.");
+        } finally {
+            // setLoading(false);
+        }
+    };
 
 
     return (
         <form
             className="max-w-full flex flex-col items-start gap-5"
-            // onSubmit={handleSubmit}
+            onSubmit={handleSubmit}
         >
             <div className="flex flex-col gap-2 w-full">
                 {/* {post.image && (
@@ -132,28 +154,23 @@ const PostForm = ({ isUpdateMode = false, initialData }: PostFormProps) => {
                 className="w-full border rounded-lg px-4 py-2 focus:outline-primary"
                 />
             </div>
-
-            {loadingCategories ? (
-                <p className="text-gray-500">Loading categories...</p>
-            ) : (
-                <div className="flex flex-col gap-2 w-full">
-                    <label htmlFor="category">Category</label>
-                    <select
-                        id="category"
-                        name="category"
-                        value={postData.category_id}
-                        onChange={handleCategory}
-                        className="w-full border rounded-lg px-4 py-2 focus:outline-primary bg-white"
-                    >
-                        <option value="0">None</option>
-                        {categories.map((category) => (
-                            <option key={category.id} value={category.id}>
-                                {category.title}
-                            </option>
-                        ))}
-                    </select>
-                </div>
-            )}
+            <div className="flex flex-col gap-2 w-full">
+                <label htmlFor="category">Category</label>
+                <select
+                    id="category"
+                    name="category"
+                    value={postData.category_id}
+                    onChange={handleCategory}
+                    className="w-full border rounded-lg px-4 py-2 focus:outline-primary bg-white"
+                >
+                    <option value="0">None</option>
+                    {categories?.map((category) => (
+                        <option key={category.id} value={category.id}>
+                            {category.title}
+                        </option>
+                    ))}
+                </select>
+            </div>
             <PrimaryButton className="btn-add" type="submit">
                 Save
             </PrimaryButton>

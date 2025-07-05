@@ -1,16 +1,20 @@
 import AsideLink from "@components/AsideLink"
 import PostItem from "../PostItem"
-import { fetchFromApi } from '@/lib/api';
+import { fetchFromApi } from '@/lib/fetchFromApi';
 import { type PostCategory, type Post } from "@app/types";
 
 
-const PostsPage = async ({params}: {params: Promise<{ slug: string }>}) => {
+const PostsPage = async ({params}: {params: { slug: string }}) => {
 
      const { slug } = await params;
 
     const [postsRes, categoriesRes] = await Promise.all([
-        fetchFromApi<{ data: Post[] }>(`/posts${slug ? `?category_slug=${slug}` : ''}`),
-        fetchFromApi<{ data: PostCategory[] }>('/categories')
+        fetchFromApi<{ data: Post[] }>(
+            `/posts${slug ? `?category_slug=${slug}` : ''}`
+        ),
+        fetchFromApi<{ data: PostCategory[] }>(
+            '/categories'
+        )
     ]);
 
     const posts = postsRes.data;
