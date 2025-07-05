@@ -4,7 +4,7 @@ import { fetchFromApi } from '@/lib/fetchFromApi';
 import { type PostCategory, type Post } from "@app/types";
 
 
-const PostsPage = async ({params}: {params: { slug: string }}) => {
+const PostsPage = async ({ params }: { params:Promise<{ slug: string }> }) => {
 
      const { slug } = await params;
 

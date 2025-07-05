@@ -5,7 +5,7 @@ import Image from "next/image";
 import { fetchCurrentUserFromServer } from "@/lib/authServer";
 import EditDeleteWrapper from "./EditDeleteWrapper";
 
-const PostPage = async ({ params }: {params: { slug: string }}) => {
+const PostPage = async ({ params }: { params:Promise<{ slug: string }> }) => {
     const { slug } = await params;
     const user = await fetchCurrentUserFromServer();
 
