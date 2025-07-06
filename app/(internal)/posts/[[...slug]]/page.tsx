@@ -1,7 +1,7 @@
 import AsideLink from "@components/AsideLink"
 import PostItem from "../PostItem"
 import { fetchFromApi } from '@/lib/fetchFromApi';
-import { type PostCategory, type Post, Notification, NotificationType } from "@app/types";
+import { type PostCategory, type Post} from "@app/types";
 
 const PostsPage = async ({ params }: { params:Promise<{ slug: string }> }) => {
 

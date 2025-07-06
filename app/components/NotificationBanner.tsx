@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { Notification } from '../types';
 
-interface NotificationBannerProps extends Notification {}
 
 const typeClasses: Record<Notification['type'], string> = {
   success: "text-green-800 bg-green-50 border-green-700",
@@ -15,7 +14,7 @@ const typeClasses: Record<Notification['type'], string> = {
 export default function NotificationBanner({
   message,
   type = 'info',
-}: NotificationBannerProps) {
+}: Notification) {
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {

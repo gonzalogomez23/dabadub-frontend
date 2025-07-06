@@ -14,7 +14,6 @@ interface PostFormProps {
 }
 
 const PostForm = ({ initialData, categories, isEditMode = false, slug }: PostFormProps) => {
-    const [loading, setLoading] = useState(false);
 
     const [postData, setPostData] = useState({
         title: initialData?.title ?? "",

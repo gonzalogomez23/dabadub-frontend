@@ -44,7 +44,9 @@ async function postActionHandler({ formData, slug, isEditMode }: PostActionParam
         ? `${process.env.API_BASE_URL}/posts/${slug}`
         : `${process.env.API_BASE_URL}/posts`;
 
-    isEditMode && formData.append('_method', 'PUT');
+    if (isEditMode) {
+        formData.append('_method', 'PUT');
+    }
 
     const res = await fetch(endpoint, {
         method: 'POST',
