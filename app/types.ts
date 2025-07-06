@@ -40,3 +40,10 @@ export interface User {
   // created_at: string;
   // updated_at: string;
 }
+
+export type NotificationType = 'success' | 'error' | 'warning' | 'info';
+
+export interface Notification {
+  message: string;
+  type: NotificationType;
+}

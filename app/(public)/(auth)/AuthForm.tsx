@@ -3,7 +3,7 @@ import PrimaryButton from "@/app/components/PrimaryButton"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { signup, login } from "@/lib/auth"
-import FormInput from "@/app/components/FormImput"
+import FormInput from "@/app/components/FormInput"
 
 type FormErrors = Record<string, string[]>;
 
@@ -18,7 +18,7 @@ const AuthForm = ({ isSignup = false }) => {
     const [errors, setErrors] = useState<FormErrors | null>(null);
     const [loading, setLoading] = useState(false);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData(prev => ({
         ...prev,
         [e.target.name]: e.target.value,

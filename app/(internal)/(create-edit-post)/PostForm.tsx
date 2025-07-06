@@ -1,21 +1,21 @@
 'use client'
-import { useState, /* useEffect */ } from "react";
+import { useState } from "react";
 import { type PostCategory, type Post } from "@app/types";
 import PrimaryButton from "@components/PrimaryButton";
-import { useRouter } from "next/navigation";
+import FormInput from "@/app/components/FormInput";
+import FormSelect from "@/app/components/FormSelect";
+import { handlePostActions } from "./postActions";
 
 interface PostFormProps {
     initialData?: Post | null
     categories?: PostCategory[]
-    isUpdateMode?: boolean;
+    isEditMode?: boolean;
     slug?: string;
 }
 
-const PostForm = ({ initialData, categories, isUpdateMode = false, slug }: PostFormProps) => {
-    // const [loading, setLoading] = useState(false);
-    // const [errors, setErrors] = useState(null);
+const PostForm = ({ initialData, categories, isEditMode = false, slug }: PostFormProps) => {
+    const [loading, setLoading] = useState(false);
 
-    const router = useRouter()
     const [postData, setPostData] = useState({
         title: initialData?.title ?? "",
         description: initialData?.description ?? "",
@@ -39,52 +39,15 @@ const PostForm = ({ initialData, categories, isUpdateMode = false, slug }: PostF
         }));
     }
 
-    const handleSubmit = async (ev: React.FormEvent<HTMLFormElement>) => {
-        ev.preventDefault();
-        
-        try {
-            const data = new FormData();
-            data.append("title", postData.title);
-            data.append("description", postData.description);
-            data.append("content", postData.content);
-            data.append("category_id", postData.category_id.toString());
-            // if (isUpdateMode) {data.append('_method', 'PUT');}
-
-            // console.log('Submitting post data:', Object.fromEntries(data.entries()));
-            const endpoint = isUpdateMode ? `/api/posts/${slug}` : '/api/posts';
-            const method = isUpdateMode ? 'PUT' : 'POST';
-
-            const res = await fetch(endpoint, {
-                method: method,
-                body: data,
-            });
-
-            console.log(res)
-
-            if (!res.ok) {
-                const errorText = await res.text();
-                throw new Error(`Error: ${res.status} - ${errorText}`);
-            }
-
-            // setSuccess(true);
-            router.push('/posts')
-            router.refresh()
-        } catch (err) {
-            console.error(err);
-            // setError("Error creating post.");
-        } finally {
-            // setLoading(false);
-        }
-    };
-
-
     return (
         <form
-            className="max-w-full flex flex-col items-start gap-5"
-            onSubmit={handleSubmit}
+            className="flex flex-col items-start gap-5 w-full"
+            action={handlePostActions}
         >
-            <div className="flex flex-col gap-2 w-full">
-                {/* {post.image && (
+            <input type="hidden" name="isEditMode" value={isEditMode ? 'true' : 'false'} />
+            {isEditMode && <input type="hidden" name="slug" value={slug} />}
+            {/* <div className="flex flex-col gap-2 w-full">
+                {post.image && (
                     <div className="mb-4">
                         <p className="mb-2">Current image:</p>
                         <div className="">
@@ -116,61 +79,47 @@ const PostForm = ({ initialData, categories, isUpdateMode = false, slug }: PostF
                 />
                 <p id="imageHelp" className="text-gray-500 text-sm">
                     Accepted formats: jpg, jpeg, png, webp
-                </p> */}
-            </div>
-
-            <div className="flex flex-col gap-2 w-full">
-                <label htmlFor="title">Title</label>
-                <input
-                    id="title"
-                    name="title"
-                    defaultValue={postData.title}
-                    onChange={handleChange}
-                    placeholder="Title"
-                    className="w-full border rounded-lg px-4 py-2 focus:outline-primary"
-                />
-            </div>
-
-            <div className="flex flex-col gap-2 w-full">
-                <label htmlFor="description">Description</label>
-                <textarea
-                    id="description"
-                    name="description"
-                    defaultValue={postData.description}
-                    onChange={handleChange}
-                    placeholder="Description"
-                    className="w-full border rounded-lg px-4 py-2 focus:outline-primary"
-                />
-            </div>
-
-            <div className="flex flex-col gap-2 w-full">
-                <label htmlFor="content">Content</label>
-                <textarea
+                </p>
+            </div> */}
+            <FormInput
+                label="Title"
+                id="title"
+                name="title"
+                type="text"
+                placeholder="Title"
+                value={postData.title}
+                onChange={handleChange}
+                // error={errors?.password?.[0] ?? null}
+            />
+            <FormInput
+                label="Description"
+                id="description"
+                name="description"
+                type="text"
+                placeholder="Description"
+                value={postData.description}
+                onChange={handleChange}
+            />
+            <FormInput
+                as="textarea"
+                label="Content"
                 id="content"
                 name="content"
-                defaultValue={postData.content}
-                onChange={handleChange}
+                type="text"
                 placeholder="Content"
-                className="w-full border rounded-lg px-4 py-2 focus:outline-primary"
-                />
-            </div>
-            <div className="flex flex-col gap-2 w-full">
-                <label htmlFor="category">Category</label>
-                <select
-                    id="category"
-                    name="category"
-                    value={postData.category_id}
-                    onChange={handleCategory}
-                    className="w-full border rounded-lg px-4 py-2 focus:outline-primary bg-white"
-                >
-                    <option value="0">None</option>
-                    {categories?.map((category) => (
-                        <option key={category.id} value={category.id}>
-                            {category.title}
-                        </option>
-                    ))}
-                </select>
-            </div>
+                value={postData.content}
+                onChange={handleChange}
+            />
+            <FormSelect
+                label="Category"
+                name="category_id"
+                value={postData.category_id}
+                onChange={handleCategory}
+                options={categories ?? []}
+                required
+                // error={formErrors.category}
+            />
+
             <PrimaryButton className="btn-add" type="submit">
                 Save
             </PrimaryButton>
