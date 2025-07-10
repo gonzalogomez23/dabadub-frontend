@@ -4,7 +4,7 @@ import type { Notification, NotificationType } from "@app/types";
 export async function getNotification(): Promise<Notification | null> {
   const cookieStore = await cookies();
   const message = cookieStore.get('notification')?.value ?? null;
-  const type = (cookieStore.get('notificationType')?.value as NotificationType | undefined) ?? 'info';
+  const type = (cookieStore.get('notificationType')?.value as NotificationType) ?? 'info';
 
   if (!message) return null;
   return { message, type };

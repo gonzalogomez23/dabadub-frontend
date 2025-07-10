@@ -6,7 +6,7 @@ export default function AuthLayout({ children }: Readonly<{
 }>) {
 
     return (
-        <div className="relative w-screen h-screen">
+        <div className="relative w-screen h-screen flex items-center justify-center">
             <div className="absolute left-[50%] top-[40%] translate-x-[-50%] translate-y-[-50%] w-[500px] h-[500px] rounded-full bg-light1 blur-2xl opacity-60 z-0"></div>
             <div className="relative flex min-h-screen w-full flex-col items-center justify-center gap-8 p-4 z-10">
                 <Link href="/">

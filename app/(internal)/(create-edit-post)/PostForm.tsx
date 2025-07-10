@@ -1,10 +1,10 @@
 'use client'
-import { useState } from "react";
-import { type PostCategory, type Post } from "@app/types";
+import { useActionState, useState } from "react";
+import { PostCategory, Post, FormErrors } from "@app/types";
 import PrimaryButton from "@components/PrimaryButton";
 import FormInput from "@/app/components/FormInput";
 import FormSelect from "@/app/components/FormSelect";
-import { handlePostActions } from "./postActions";
+import { handleCreateUpdatePostAction } from "./postActions";
 
 interface PostFormProps {
     initialData?: Post | null
@@ -14,6 +14,7 @@ interface PostFormProps {
 }
 
 const PostForm = ({ initialData, categories, isEditMode = false, slug }: PostFormProps) => {
+    const [errors, formAction] = useActionState<FormErrors, FormData>(handleCreateUpdatePostAction, {});
 
     const [postData, setPostData] = useState({
         title: initialData?.title ?? "",
@@ -41,7 +42,7 @@ const PostForm = ({ initialData, categories, isEditMode = false, slug }: PostFor
     return (
         <form
             className="flex flex-col items-start gap-5 w-full"
-            action={handlePostActions}
+            action={formAction}
         >
             <input type="hidden" name="isEditMode" value={isEditMode ? 'true' : 'false'} />
             {isEditMode && <input type="hidden" name="slug" value={slug} />}
@@ -88,7 +89,7 @@ const PostForm = ({ initialData, categories, isEditMode = false, slug }: PostFor
                 placeholder="Title"
                 value={postData.title}
                 onChange={handleChange}
-                // error={errors?.password?.[0] ?? null}
+                error={errors.title?.[0] ?? null}
             />
             <FormInput
                 label="Description"
@@ -98,6 +99,7 @@ const PostForm = ({ initialData, categories, isEditMode = false, slug }: PostFor
                 placeholder="Description"
                 value={postData.description}
                 onChange={handleChange}
+                error={errors.description?.[0] ?? null}
             />
             <FormInput
                 as="textarea"
@@ -108,6 +110,7 @@ const PostForm = ({ initialData, categories, isEditMode = false, slug }: PostFor
                 placeholder="Content"
                 value={postData.content}
                 onChange={handleChange}
+                error={errors.content?.[0] ?? null}
             />
             <FormSelect
                 label="Category"
@@ -115,10 +118,8 @@ const PostForm = ({ initialData, categories, isEditMode = false, slug }: PostFor
                 value={postData.category_id}
                 onChange={handleCategory}
                 options={categories ?? []}
-                required
-                // error={formErrors.category}
+                error={errors.category_id?.[0] ?? null}
             />
-
             <PrimaryButton className="btn-add" type="submit">
                 Save
             </PrimaryButton>

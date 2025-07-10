@@ -47,3 +47,5 @@ export interface Notification {
   message: string;
   type: NotificationType;
 }
+
+export type FormErrors = Record<string, string[]>;

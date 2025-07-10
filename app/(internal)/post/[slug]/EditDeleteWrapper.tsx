@@ -2,35 +2,20 @@
 import Link from "next/link";
 import PrimaryButton from "@/app/components/PrimaryButton";
 import { PencilIcon, TrashIcon } from "@heroicons/react/24/solid";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useTransition } from "react";
+import { deletePostAction } from "@/app/(internal)/(create-edit-post)/postActions";
 
 const EditDeleteWrapper = ({slug}: {slug: string}) => {
-  const [showModal, setShowModal] = useState(false);
-  const router = useRouter();
+    const [showModal, setShowModal] = useState(false);
 
-  const onDelete = async (postSlug: string) => {
-    try {
-        const res = await fetch(`/api/posts/${postSlug}`, {
-            method: 'DELETE',
+    const [isPending, startTransition] = useTransition();
+
+    const handleDelete = () => {
+        startTransition(() => {
+            deletePostAction(slug);
         });
-
-        const data = await res.json();
-
-        if (res.ok) {
-            // setNotification({ message: 'Post deleted successfully' });
-            console.log('Post deleted successfully')
-            router.push('/posts');
-            router.refresh();
-        } else {
-            console.error(data.message);
-            // setNotification({ message: data.message, type: 'error' });
-        }
-    } catch (error) {
-        console.error('Network error:', error);
-        // setNotification({ message: 'Network error', type: 'error' });
-    }
-};
+    };
+    
   return (
     <>
         <div className="absolute flex right-0 top-0 p-8 gap-4 items-center">
@@ -62,7 +47,10 @@ const EditDeleteWrapper = ({slug}: {slug: string}) => {
                             <PrimaryButton variant="secondary" onClick={() => setShowModal(false)}>
                                 No
                             </PrimaryButton>
-                            <PrimaryButton onClick={() => onDelete(slug)} className="bg-red-600 text-white hover:!bg-red-500">
+                            <PrimaryButton
+                                onClick={handleDelete}
+                                disabled={isPending}
+                                className="bg-red-600 text-white hover:!bg-red-500  disabled:opacity-50">
                                 Yes, delete
                                 <TrashIcon className='size-4' />
                             </PrimaryButton>

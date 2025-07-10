@@ -25,8 +25,8 @@ export default function NotificationBanner({
   if (!visible) return null;
 
   return (
-    <div className="fixed top-0 left-0 w-screen flex justify-center p-8" role="alert">
-        <div className={`max-w-full border-2 rounded-lg px-6 py-3 ${typeClasses[type]} transition-opacity duration-500`} >
+    <div className="fixed z-10 top-0 left-0 w-screen flex justify-center p-8" role="alert">
+        <div className={`relative z-50 max-w-full border-2 rounded-lg px-6 py-3 ${typeClasses[type]} transition-opacity duration-500`} >
         {message}
         </div>
     </div>
