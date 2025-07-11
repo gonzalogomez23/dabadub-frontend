@@ -5,6 +5,7 @@ import { setNotification } from '@/lib/server/setNotification';
 import { redirect } from 'next/navigation';
 import { FormErrors } from '@/app/types';
 import { revalidatePath } from 'next/cache';
+import { isRedirectError } from 'next/dist/client/components/redirect-error';
 
 
 export async function handleCreateUpdatePostAction(
@@ -64,7 +65,7 @@ export async function deletePostAction(slug: string) {
     const cookieStore = await cookies();
     const token = cookieStore.get('access_token')?.value;
 
-    // try {
+    try {
         const backendUrl = `${process.env.API_BASE_URL}/posts/${slug}`;
 
         const res = await fetch(backendUrl, {
@@ -85,7 +86,7 @@ export async function deletePostAction(slug: string) {
             revalidatePath('/posts');
             redirect('/posts');
         }
-        console.log(data);
+        
         setNotification({
             message: 'Post deleted successfully.',
             type: 'success',
@@ -93,12 +94,15 @@ export async function deletePostAction(slug: string) {
         revalidatePath('/posts');
         redirect('/posts');
 
-    // } catch (error) {
-    //     console.error('Error deleting post:', error);
-    //     setNotification({
-    //         message: 'Internal Server Error.',
-    //         type: 'error',
-    //     });
-    //     redirect('/posts');
-    // }
+    } catch (error) {
+        if (isRedirectError(error)) {
+            throw error;
+        }
+        console.error('Error deleting post:', error);
+        setNotification({
+            message: 'Something went wrong, please try again later.',
+            type: 'error',
+        });
+        redirect('/posts');
+    }
 }
