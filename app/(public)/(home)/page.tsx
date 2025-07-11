@@ -1,3 +1,4 @@
+import PrimaryButton from "@/app/components/PrimaryButton";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -13,7 +14,12 @@ export default function Home() {
             height={0}
             priority
         />
-        <Link href="/posts" className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-primary hover:bg-secondary text-background gap-2 font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto">Posts</Link>
+        {/* <Link href="/posts" className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-primary hover:bg-secondary text-background gap-2 font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto">Posts</Link> */}
+        <Link href="/posts">
+          <PrimaryButton>
+            Posts
+          </PrimaryButton>
+        </Link>
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
       </footer>

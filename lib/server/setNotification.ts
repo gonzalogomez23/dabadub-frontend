@@ -10,7 +10,7 @@ export async function setNotification({
   message,
   type = 'info',
   path = '/',
-  maxAge = 10,
+  maxAge = 4,
 }: NotificationOptions) {
   if (!message) {
     console.warn('setNotification was called without a message. Skipping.');

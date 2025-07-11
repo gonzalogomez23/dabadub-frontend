@@ -32,31 +32,36 @@ const FormInput = ({
     className = "",
     error = null,
 }: FormInputProps) => {
+    
+    const baseClasses = `bg-zinc-50/40 min-w-72 w-full border-2 border-border1 rounded-xl px-4 py-2 focus:outline-secondary ${error ? 'border-red-700' : ''} ${className}`
+
     return (
         <div className="flex flex-col gap-2 w-full">
             <label htmlFor={name} hidden={!label}>{label}</label>
             {as === 'textarea' ? (
                 <textarea
                     name={name}
+                    id={name}
                     placeholder={placeholder}
                     value={value}
                     onChange={onChange}
                     required={required}
                     disabled={disabled}
                     rows={4}
-                    className={`bg-zinc-50/40 min-w-72 w-full border-2 border-border1 rounded-lg px-4 py-2 focus:outline-secondary ${error ? 'border-red-700' : ''} ${className}`}
+                    className={baseClasses}
                 />
             ) : (
                 <input
                     type={type}
                     name={name}
+                    id={name}
                     placeholder={placeholder}
                     value={value}
                     onChange={onChange}
                     required={required}
                     autoComplete={autoComplete}
                     disabled={disabled}
-                    className={`bg-zinc-50/40 min-w-72 w-full border-2 border-border1 rounded-lg px-4 py-2 focus:outline-secondary ${error ? 'border-red-700' : ''} ${className}`}
+                    className={baseClasses}
                 />
             )}
             {error && (

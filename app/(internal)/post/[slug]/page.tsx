@@ -28,7 +28,7 @@ const PostPage = async ({ params }: { params:Promise<{ slug: string }> }) => {
                             height={0}
                         />
                     )}
-                    <div className="w-full mx-auto flex flex-col gap-6 p-12">
+                    <div className="w-full mx-auto flex flex-col gap-6 py-6 px-4 lg:px-12 lg:py-12">
                         {post.category &&
                             <div className="flex">
                                 <span className="flex w-fit rounded-full items-center justify-center text-primary text-sm font-headings bg-secondary/10 px-3 py-1">

@@ -6,7 +6,7 @@ export default function InternalLayout({ children }: Readonly<{
   return (
     <>
         <Header  className="font-sans relative z-20"/>
-        <main className="font-sans bg-zinc-100 grow relative z-20">
+        <main className="font-sans bg-zinc-100 grow relative z-10">
           <div className="w-full max-w-7xl mx-auto">{children}</div>
         </main>
     </>

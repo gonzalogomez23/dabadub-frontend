@@ -5,7 +5,8 @@ import { User } from "@/app/types";
 import Link from "next/link"
 import DropdownMenu from "@components/DropdownMenu"
 import PrimaryButton from "@components/PrimaryButton"
-import { ArrowRightStartOnRectangleIcon, BookmarkIcon, PencilSquareIcon, UserCircleIcon } from "@heroicons/react/24/solid"
+import { UserCircleIcon } from "@heroicons/react/24/solid"
+import { ArrowRightStartOnRectangleIcon, BookmarkIcon, PencilSquareIcon } from "@heroicons/react/24/outline"
 
 const  AuthArea = () => {
     const [user, setUser] = useState<User | null>(null);
@@ -53,24 +54,22 @@ const  AuthArea = () => {
 
     return (
         <div className="flex gap-4 items-center">
-            <Link href="/new-post">
-                <PrimaryButton variant="secondary">
-                    New post
-                    <PencilSquareIcon className="size-5"/>
-                </PrimaryButton>
-            </Link>
             <DropdownMenu
                 label={user.name}
                 buttonIcon={(
                     <UserCircleIcon className="size-8 text-zinc-400"/>
                 )}
             >
-                <DropdownMenu.Item className="opacity-50 hover:bg-transparent cursor-default">
-                    <BookmarkIcon className="size-6"/>
+                <DropdownMenu.Item url="/new-post" className="hover:bg-zinc-100 transition-all">
+                        <PencilSquareIcon className="size-6 p-0.5"/>
+                        New post
+                    </DropdownMenu.Item>
+                <DropdownMenu.Item className="opacity-30 hover:bg-transparent cursor-default">
+                    <BookmarkIcon className="size-6 p-0.5"/>
                     My favourites
                 </DropdownMenu.Item>
                 <DropdownMenu.Item className="hover:bg-zinc-100 transition-all" parentMethod={handleLogout}>
-                    <ArrowRightStartOnRectangleIcon className="size-6"/>
+                    <ArrowRightStartOnRectangleIcon className="size-6 p-0.5"/>
                     Log out
                 </DropdownMenu.Item>
             </DropdownMenu>

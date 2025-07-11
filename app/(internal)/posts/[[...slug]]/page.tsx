@@ -20,8 +20,8 @@ const PostsPage = async ({ params }: { params:Promise<{ slug: string }> }) => {
                 />
             )}
 
-            <div className="min-h-100 flex gap-3 p-3">
-                <aside className="min-w-80 w-80 max-w-full">
+            <div className="min-h-100 flex flex-col lg:flex-row gap-3 p-3">
+                <aside className="w-full lg:w-80 max-w-full">
                     <div className="w-full flex flex-col gap-6 rounded-xl bg-zinc-50 border border-primary/15 p-2">
                         <Suspense fallback={<CategoriesListSkeleton />}>
                             <PostCategoriesList slug={slug} />
@@ -30,7 +30,7 @@ const PostsPage = async ({ params }: { params:Promise<{ slug: string }> }) => {
                 </aside>
 
                 <div className="content grow">
-                    <div className="rounded-xl bg-zinc-50 border border-primary/15 overflow-hidden">
+                    <div className="rounded-xl bg-zinc-50 border border-primary/15 overflow-hidden px-4">
                         <Suspense fallback={<PostsListSkeleton />}>
                             <PostList slug={slug} />
                         </Suspense>

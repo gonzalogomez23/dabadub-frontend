@@ -51,7 +51,7 @@ const AuthForm = ({ isSignup = false }) => {
   
   return (
     <form
-      className="flex flex-col gap-4 w-full"
+      className="flex flex-col items-stretch gap-4 w-full"
       onSubmit={handleSubmit}
       noValidate
     >
@@ -91,7 +91,7 @@ const AuthForm = ({ isSignup = false }) => {
         />
       )}
 
-      <PrimaryButton className={`ms-auto ${loading && 'cursor-default opacity-50'}`} type="submit" disabled={loading}>
+      <PrimaryButton className={`ms-auto w-full ${loading && 'cursor-default opacity-50'}`} type="submit" disabled={loading}>
           {isSignup ? 'Sign Up' : 'Log In'}
       </PrimaryButton>
       {errors?.general && (
