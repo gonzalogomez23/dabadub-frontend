@@ -15,7 +15,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${interFont.variable} ${outfitFont.variable} ${sortsMillGoudyFont.variable} antialiased bg-zinc-50 min-h-screen flex flex-col justify-start items-stretch relative`}
+        className={`${interFont.variable} ${outfitFont.variable} ${sortsMillGoudyFont.variable} antialiased bg-zinc-50 min-h-dvh flex flex-col justify-start items-stretch relative`}
       >
         {children}
       </body>

@@ -34,7 +34,7 @@ const EditDeleteWrapper = ({slug}: {slug: string}) => {
             <div
                 role='dialog'
                 aria-labelledby='editTask'
-                className='fixed inset-0 w-screen h-screen bg-black/30 left-0 top-0 flex justify-center items-center z-50 p-12'
+                className='fixed inset-0 w-dvw h-dvh bg-black/30 left-0 top-0 flex justify-center items-center z-50 p-12'
                 onMouseDown={(e) => {
                     if (e.target === e.currentTarget) {
                         setShowModal(false);
