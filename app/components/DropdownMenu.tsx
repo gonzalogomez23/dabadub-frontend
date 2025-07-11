@@ -53,7 +53,7 @@ const DropdownMenu = ({ label, buttonIcon, children }: DropdownMenuProps) => {
                 <div className="flex flex-col gap-2" role="none">
                     {Children.map(children, (child) => {
                     if (isValidElement(child)) {
-                        return cloneElement(child as React.ReactElement<any>, { closeMenu });
+                        return cloneElement(child as React.ReactElement<DropdownMenuItemProps>, { closeMenu });
                     }
                     return child;
                 })}
