@@ -16,7 +16,7 @@ export const fetchCurrentUserFromServer = async () => {
     });
     
     if (!res.ok) {
-        console.error('Failed to fetch user:', res.statusText);
+        // console.error('Failed to fetch user:', res.statusText);
         return null;
     }
 

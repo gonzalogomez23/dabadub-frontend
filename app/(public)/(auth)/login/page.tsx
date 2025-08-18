@@ -9,16 +9,15 @@ const LoginPage = () => {
     >
         <h1 className="title px-2">Log in to your account</h1>
         <AuthForm />
-        {/* <p className="w-full text-end">
-          Not Registered? <Link href="/signup" className="text-primary hover:underline">Create an account</Link>
-        </p> */}
         <hr className="w-full text-border1 border-t-2" />
-        <p>Not Registered?</p>
-        <Link href="/signup" className="text-primary w-full">
-          <PrimaryButton variant="secondary" className="w-full">
-            Create an account
-          </PrimaryButton>
-        </Link>
+        <div className="w-full flex flex-col gap-2">
+          <p>Not registered?</p>
+          <Link href="/signup" className="text-primary w-full">
+            <PrimaryButton variant="secondary" className="w-full">
+              Create an account
+            </PrimaryButton>
+          </Link>
+        </div>
     </div>
   )
 }

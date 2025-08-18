@@ -13,8 +13,8 @@ const AsideLink: React.FC<AsideLinkProps> = ({ pageSlug, url, children, classNam
   
   const isActive =
     categorySlug && pageSlug
-    ? categorySlug === pageSlug[0]
-    : !categorySlug && (!pageSlug || !pageSlug[0]);
+    ? categorySlug === pageSlug
+    : !categorySlug && (!pageSlug || !pageSlug);
 
   if (!url) {
     return (

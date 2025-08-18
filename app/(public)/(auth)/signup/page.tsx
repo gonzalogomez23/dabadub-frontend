@@ -10,12 +10,14 @@ const SignUpPage = () => {
         <h1 className="title">Create your account</h1>
         <AuthForm isSignup />
         <hr className="w-full text-border1 border-t-2" />
-        <p>Already Registered</p>
-        <Link href="/login" className="text-primary w-full">
-          <PrimaryButton variant="secondary" className="w-full">
-            Log in
-          </PrimaryButton>
-        </Link>
+        <div className="w-full flex flex-col gap-2">
+          <p>Already registered?</p>
+          <Link href="/login" className="text-primary w-full">
+            <PrimaryButton variant="secondary" className="w-full">
+              Log in
+            </PrimaryButton>
+          </Link>
+        </div>
     </div>
   )
 }

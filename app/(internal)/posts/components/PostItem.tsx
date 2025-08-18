@@ -17,7 +17,7 @@ const PostItem: React.FC<PostItemProps> = ({ post }) => {
   return (
     <Link
         href={`/post/${post.slug}`}
-        className="flex group overflow-hidden h-fit border-b-2 border-primary/15 last:border-none gap-3 lg:px-4 py-6"
+        className="flex group overflow-hidden h-fit border-b-2 border-primary/15 last:border-none gap-3 lg:px-4 py-4 lg:py-6 px-2"
     >
         <div className="flex flex-col grow max-h-80 gap-3">
             {post.category && (

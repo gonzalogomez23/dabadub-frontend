@@ -9,7 +9,7 @@ export default async function PostList({ slug }: { slug?: string }) {
     const posts = postsRes.data;
 
     return (
-        <div className='flex flex-col w-full max-w-[42rem] mx-auto lg:py-4'>
+        <div className='flex flex-col w-full max-w-[42rem] mx-auto'>
             {posts.length > 0 ? (
                 posts.map(post => (
                     <PostItem
