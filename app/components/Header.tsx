@@ -9,11 +9,11 @@ const Header = ({className = ''}) => {
         <div className="px-3">
             <Link href="/">
                 <Image
-                    src="/dabadub-logo.svg"
+                    src="/dabadub-horizontal.svg"
                     alt="Dabadub logo"
                     width={0}
                     height={0}
-                    className="w-15 h-auto"
+                    className="w-40 h-auto"
                     priority
                 />
             </Link>
